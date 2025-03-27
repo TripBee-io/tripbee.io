@@ -1,6 +1,7 @@
 import AviaSalesCalendarWidget from '@/components/AviaSalesCalendarWidget'
 import AviasalesFlightScheduleWidget from '@/components/AviaSalesFlightScheduleWidget'
 import AviasalesMapWidget from '@/components/AviaSalesMapWidget'
+import AviaSalesPopularWidget from '@/components/AviaSalesPopularWidget'
 import AviasalesSearchFormWidget from '@/components/AviaSalesSearchFormWidget'
 import Modal from '@/components/Modal'
 
@@ -12,6 +13,7 @@ export default function Home() {
 			<AviasalesFlightScheduleWidget />
 			<AviasalesMapWidget />
 			<AviaSalesCalendarWidget />
+			<AviaSalesPopularWidget />
 		</div>
 	)
 }

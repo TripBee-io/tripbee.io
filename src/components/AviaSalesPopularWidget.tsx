@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react'
 
-const AviaSalesCalendarWidget = () => {
+const AviaSalesPopularWidget = () => {
 	useEffect(() => {
 		const script = document.createElement('script')
 		script.src =
@@ -26,4 +26,4 @@ const AviaSalesCalendarWidget = () => {
 	)
 }
 
-export default AviaSalesCalendarWidget
+export default AviaSalesPopularWidget
