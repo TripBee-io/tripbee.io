@@ -10,7 +10,7 @@ const AviasalesMapWidget = () => {
 		script.async = true
 
 		const container = document.getElementById(
-			'travelpayouts-widget-container'
+			'travelpayouts-map-widget-container'
 		)
 		if (container) {
 			container.appendChild(script)
@@ -21,7 +21,7 @@ const AviasalesMapWidget = () => {
 
 	return (
 		<div
-			id='travelpayouts-widget-container'
+			id='travelpayouts-map-widget-container'
 			className='max-w-5xl'></div>
 	)
 }

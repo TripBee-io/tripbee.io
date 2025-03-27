@@ -10,7 +10,7 @@ const AviasalesFlightScheduleWidget = () => {
 		script.async = true
 
 		const container = document.getElementById(
-			'travelpayouts-widget-container'
+			'travelpayouts-sch-widget-container'
 		)
 		if (container) {
 			container.appendChild(script)
@@ -19,7 +19,7 @@ const AviasalesFlightScheduleWidget = () => {
 		}
 	}, [])
 
-	return <div id='travelpayouts-widget-container'></div>
+	return <div id='travelpayouts-sch-widget-container' className='max-w-7xl'></div>
 }
 
 export default AviasalesFlightScheduleWidget

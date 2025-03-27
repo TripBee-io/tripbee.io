@@ -10,7 +10,7 @@ const AviasalesSearchFormWidget = () => {
 		script.async = true
 
 		const container = document.getElementById(
-			'travelpayouts-widget-container'
+			'travelpayouts-form-widget-container'
 		)
 		if (container) {
 			container.appendChild(script)
@@ -21,8 +21,8 @@ const AviasalesSearchFormWidget = () => {
 
 	return (
 		<div
-			id='travelpayouts-widget-container'
-			className='max-w-5xl'></div>
+			id='travelpayouts-form-widget-container'
+			className=''></div>
 	)
 }
 
