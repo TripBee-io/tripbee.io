@@ -11,6 +11,8 @@
 	"dependencies": {
 		"@tailwindcss/postcss": "^4.0.17",
 		"next": "15.2.3",
+		"posthog-js": "^1.233.1",
+		"posthog-node": "^4.10.2",
 		"react": "^19.0.0",
 		"react-dom": "^19.0.0"
 	},

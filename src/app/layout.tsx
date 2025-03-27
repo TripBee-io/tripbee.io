@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
 import Script from 'next/script'
+import { PostHogProvider } from '../components/PostHogProvider'
 
 const geistSans = Geist({
 	variable: '--font-geist-sans',
@@ -35,9 +36,10 @@ export default function RootLayout({
 					data-wpfc-render='false'
 				/>
 			</head>
-			<body
-				className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-				{children}
+			<body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+				<PostHogProvider>
+					{children}
+				</PostHogProvider>
 			</body>
 		</html>
 	)
