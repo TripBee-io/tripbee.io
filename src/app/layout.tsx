@@ -44,6 +44,9 @@ export const metadata: Metadata = {
 	title: 'Cheap Flights - Compare & Book Flights Worldwide | TripBee',
 	description:
 		'Search hundreds of sites to find cheap flights worldwide. Compare airfare deals and book flights online with TripBee. Add a hotel to your flight and save more.',
+	icons: {
+		icon: '/fav.svg',
+	},
 	openGraph: {
 		title: 'TripBee - Cheap Flights & Travel Deals',
 		description:
@@ -54,7 +57,7 @@ export const metadata: Metadata = {
 		type: 'website',
 		images: [
 			{
-				url: '/opengraph-tripbee.png',
+				url: 'https://www.tripbee.io/opengraph-tripbee.png',
 				width: 1200,
 				height: 630,
 				alt: 'TripBee - Cheap Flights Search',
@@ -66,7 +69,7 @@ export const metadata: Metadata = {
 		title: 'TripBee - Cheap Flights & Flight Comparison',
 		description:
 			'Find and book cheap flights worldwide with TripBee. We compare flights across hundreds of airlines to get you the best deals. Start your journey here!',
-		images: ['/opengraph-tripbee.png'],
+		images: ['https://www.tripbee.io/opengraph-tripbee.png'],
 	},
 	alternates: {
 		canonical: 'https://tripbee.io/',
