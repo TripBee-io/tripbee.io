@@ -20,18 +20,19 @@ const jsonLd = {
 	'@type': 'TravelAgency',
 	name: 'Tripbee',
 	url: 'https://tripbee.io',
-	logo: 'https://tripbee.io/logo.png', // Example: link to your actual logo
+	logo: 'https://tripbee.io/logo.png',
+	image: 'https://tripbee.io/opengraph-tripbee.png',
 	// sameAs: [
 	// 	'https://www.instagram.com/tripbee',
 	// 	'https://www.twitter.com/tripbee',
 	// ],
-	contactPoint: [
-		{
-			'@type': 'ContactPoint',
-			telephone: '+1-555-TRIPBEE',
-			contactType: 'Customer Support',
-		},
-	],
+	// contactPoint: [
+	// 	{
+	// 		'@type': 'ContactPoint',
+	// 		telephone: '+1-555-TRIPBEE',
+	// 		contactType: 'Customer Support',
+	// 	},
+	// ],
 	// {
 	// 	"potentialAction": {
 	//     "@type": "SearchAction",
@@ -57,9 +58,9 @@ export const metadata: Metadata = {
 		type: 'website',
 		images: [
 			{
-				url: 'https://www.tripbee.io/opengraph-tripbee.png',
-				width: 1200,
-				height: 630,
+				url: 'https://tripbee.io/opengraph-tripbee.png',
+				width: 800,
+				height: 600,
 				alt: 'TripBee - Cheap Flights Search',
 			},
 		],
@@ -69,10 +70,10 @@ export const metadata: Metadata = {
 		title: 'TripBee - Cheap Flights & Flight Comparison',
 		description:
 			'Find and book cheap flights worldwide with TripBee. We compare flights across hundreds of airlines to get you the best deals. Start your journey here!',
-		images: ['https://www.tripbee.io/opengraph-tripbee.png'],
+		images: ['https://tripbee.io/opengraph-tripbee.png'],
 	},
 	alternates: {
-		canonical: 'https://tripbee.io/',
+		canonical: 'https://www.tripbee.io/',
 		// You can add hreflang alternate URLs here in the future for multi-language support.
 	},
 }
