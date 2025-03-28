@@ -54,7 +54,7 @@ export const metadata: Metadata = {
 		type: 'website',
 		images: [
 			{
-				url: 'https://tripbee.io/logo.png', // placeholder for an actual OG image URL
+				url: '/opengraph-tripbee.png',
 				width: 1200,
 				height: 630,
 				alt: 'TripBee - Cheap Flights Search',
@@ -66,7 +66,7 @@ export const metadata: Metadata = {
 		title: 'TripBee - Cheap Flights & Flight Comparison',
 		description:
 			'Find and book cheap flights worldwide with TripBee. We compare flights across hundreds of airlines to get you the best deals. Start your journey here!',
-		images: ['https://tripbee.io/logo.png'],
+		images: ['/opengraph-tripbee.png'],
 	},
 	alternates: {
 		canonical: 'https://tripbee.io/',
