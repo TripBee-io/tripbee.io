@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 export default function Hero() {
 	return (
-		<div className='bg-gradient-to-r from-[#562A83] to-[#2F0743] w-full h-[60vh] flex flex-col justify-between items-center pt-6 pb-14 px-6'>
+		<div className='bg-gradient-to-r from-[#562A83] to-[#2F0743] w-full h-[90vh] md:h-[60vh] flex flex-col justify-between items-center pt-6 pb-14 px-6'>
 			<nav className='max-w-7xl w-full'>
 				<Link href={'/'}>
 					<Image
