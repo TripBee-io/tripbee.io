@@ -17,7 +17,7 @@ export default function Hero() {
 			</nav>
 			<div className='w-full max-w-7xl flex flex-col items-start justify-center gap-10'>
 				<div className='relative'>
-					<h1 className='font-semibold text-2xl md:font-extrabold md:text-[46px] max-w-[730px] text-white text-start'>
+					<h1 className='font-semibold text-2xl md:font-extrabold md:text-[46px] max-w-[730px] text-white text-start leading-normal'>
 						Stop Overpaying for Flights, Grab the Cheapest Deals
 						Now!
 					</h1>
