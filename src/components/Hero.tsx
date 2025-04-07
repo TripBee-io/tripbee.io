@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import AviasalesSearchFormWidget from './AviaSalesSearchFormWidget'
+import AviasalesSearchFormWidget from './affiliate/AviaSalesSearchFormWidget'
 import Link from 'next/link'
 
 export default function Hero() {

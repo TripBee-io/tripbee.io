@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import AviasalesMapWidget from './AviaSalesMapWidget'
+import AviasalesMapWidget from './affiliate/AviaSalesMapWidget'
 
 const Modal = () => {
 	const [visible, setVisible] = useState(true)
