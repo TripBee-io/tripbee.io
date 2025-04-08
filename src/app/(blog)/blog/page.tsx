@@ -10,9 +10,8 @@ export default async function BlogHome({
 	searchParams: Promise<{ query?: string }>
 }) {
 	const query = (await searchParams).query
-	// const blogs = await client.fetch(BLOGS_QUERY)
-	const { data: blogs } = await sanityFetch({ query: BLOGS_QUERY })
-	console.log(blogs)
+	const params = { search: query || null }
+	const { data: blogs } = await sanityFetch({ query: BLOGS_QUERY, params })
 	return (
 		<>
 			<section className='text-black min-h-screen max-w-screen'>

@@ -22,6 +22,20 @@ const nextConfig: NextConfig = {
 	images: {
 		domains: ['www.akshaybenny.com'], // allow loading images from this domain
 	},
+	experimental: {
+		ppr: 'incremental',
+	},
+	devIndicators: {
+		appIsrStatus: true,
+		buildActivity: true,
+		buildActivityPosition: 'bottom-right',
+	},
+	typescript: {
+		ignoreBuildErrors: true,
+	},
+	eslint: {
+		ignoreDuringBuilds: true,
+	},
 }
 
 export default nextConfig

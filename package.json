@@ -15,9 +15,11 @@
 		"@sanity/image-url": "1",
 		"@sanity/vision": "3",
 		"@tailwindcss/postcss": "^4.0.17",
+		"@tailwindcss/typography": "^0.5.16",
 		"@vercel/analytics": "^1.5.0",
 		"lucide-react": "^0.487.0",
-		"next": "15.2.3",
+		"markdown-it": "^14.1.0",
+		"next": "15.3.0-canary.43",
 		"next-auth": "5.0.0-beta.25",
 		"next-sanity": "9.8.58-canary.0",
 		"posthog-js": "^1.233.1",
@@ -27,15 +29,18 @@
 		"sanity": "3",
 		"sanity-plugin-markdown": "^5.1.0",
 		"server-only": "^0.0.1",
-		"styled-components": "6"
+		"styled-components": "6",
+		"tailwindcss-animate": "^1.0.7"
 	},
 	"packageManager": "pnpm@10.2.0",
 	"overrides": {
 		"react": "$react",
-		"react-dom": "$react-dom"
+		"react-dom": "$react-dom",
+		"next": "$next"
 	},
 	"devDependencies": {
 		"@eslint/eslintrc": "^3",
+		"@types/markdown-it": "^14.1.2",
 		"@types/node": "^20",
 		"@types/react": "^19",
 		"@types/react-dom": "^19",
