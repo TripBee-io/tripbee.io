@@ -1,4 +1,5 @@
 import BlogCard, { BlogTypeCard } from '@/components/BlogCard'
+import Newsletter from '@/components/Newsletter'
 import SearchForm from '@/components/SearchForm'
 import { client } from '@/sanity/lib/client'
 import { sanityFetch, SanityLive } from '@/sanity/lib/live'
@@ -13,8 +14,8 @@ export default async function BlogHome({
 	const params = { search: query || null }
 	const { data: blogs } = await sanityFetch({ query: BLOGS_QUERY, params })
 	return (
-		<>
-			<section className='text-black min-h-screen max-w-screen flex flex-col justify-center items-center w-full'>
+		<div className='max-w-6xl mx-auto'>
+			<section className='text-black  max-w-screen flex flex-col justify-start items-center w-full md:pt-16'>
 				<div className='pb-12'>
 					<h1 className='text-center font-bold text-[56px] text-[#23262F]'>
 						Blogs
@@ -26,8 +27,8 @@ export default async function BlogHome({
 				</div>
 				<SearchForm query={query} />
 			</section>
-			<section>
-				<p>{query ? `Search results for "${query}"` : 'All blogs'}</p>
+			<section className='md:mt-[72px]'>
+				{/* <p>{query ? `Search results for "${query}"` : 'All blogs'}</p> */}
 				<div className='flex flex-wrap gap-8 items-center justify-center'>
 					{blogs &&
 						blogs?.map((blog: BlogTypeCard) => (
@@ -38,7 +39,10 @@ export default async function BlogHome({
 						))}
 				</div>
 			</section>
+			<section>
+				<Newsletter />
+			</section>
 			<SanityLive />
-		</>
+		</div>
 	)
 }
