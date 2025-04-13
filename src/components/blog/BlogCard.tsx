@@ -2,26 +2,28 @@ import { Author, Blog } from '@/sanity/types'
 import formatDate from '@/utils/formatDate'
 import Image from 'next/image'
 import Link from 'next/link'
+import { notFound } from 'next/navigation'
 import React from 'react'
 
 export type BlogTypeCard = Omit<Blog, 'author'> & { author?: Author }
 const BlogCard = ({ post }: { post: BlogTypeCard }) => {
 	const {
 		_createdAt,
-		views,
 		author,
 		title,
-		category,
-		_id,
+		slug, // use the slug field here
 		image,
-		description,
+		_id,
 	} = post
 
 	const authorId = author?._id
 	console.log(author)
+
+	if (!slug || !slug.current) return notFound()
+
 	return (
 		<Link
-			href={`/blog/${_id}`}
+			href={`/blog/${slug.current}`}
 			className='text-black'>
 			{image && (
 				<Image

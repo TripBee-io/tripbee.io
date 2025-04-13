@@ -30,3 +30,19 @@ export const BLOG_BY_ID_QUERY =
   image,
   article,
 }`)
+
+export const BLOG_BY_SLUG_QUERY =
+	defineQuery(`*[_type == "blog" && slug.current == $slug][0]{
+  _id, 
+  title, 
+  slug,
+  _createdAt,
+  author -> {
+    _id, name, username, image, bio
+  }, 
+  views,
+  description,
+  category,
+  image,
+  article,
+}`)
