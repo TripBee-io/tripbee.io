@@ -229,6 +229,26 @@ export type BLOG_BY_ID_QUERYResult = {
   image: string | null;
   article: string | null;
 } | null;
+// Variable: BLOG_BY_SLUG_QUERY
+// Query: *[_type == "blog" && slug.current == $slug][0]{  _id,   title,   slug,  _createdAt,  author -> {    _id, name, username, image, bio  },   views,  description,  category,  image,  article,}
+export type BLOG_BY_SLUG_QUERYResult = {
+  _id: string;
+  title: string | null;
+  slug: Slug | null;
+  _createdAt: string;
+  author: {
+    _id: string;
+    name: string | null;
+    username: string | null;
+    image: string | null;
+    bio: string | null;
+  } | null;
+  views: number | null;
+  description: string | null;
+  category: string | null;
+  image: string | null;
+  article: string | null;
+} | null;
 
 // Query TypeMap
 import "@sanity/client";
@@ -236,5 +256,6 @@ declare module "@sanity/client" {
   interface SanityQueries {
     "*[_type == \"blog\" && defined(slug.current) && !defined($search) || title match $search || category match $search || author->name match $search] | order(_createdAt desc) {\n  _id, \n  title, \n  slug,\n  _createdAt,\n  author -> {\n    _id, name, image, bio\n  }, \n  views,\n  description,\n  category,\n  image,\n}": BLOGS_QUERYResult;
     "*[_type == \"blog\" && _id == $id][0]{\n  _id, \n  title, \n  slug,\n  _createdAt,\n  author -> {\n    _id, name, username, image, bio\n  }, \n  views,\n  description,\n  category,\n  image,\n  article,\n}": BLOG_BY_ID_QUERYResult;
+    "*[_type == \"blog\" && slug.current == $slug][0]{\n  _id, \n  title, \n  slug,\n  _createdAt,\n  author -> {\n    _id, name, username, image, bio\n  }, \n  views,\n  description,\n  category,\n  image,\n  article,\n}": BLOG_BY_SLUG_QUERYResult;
   }
 }

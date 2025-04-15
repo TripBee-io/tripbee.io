@@ -12,11 +12,15 @@
 		"typegen": "sanity schema extract --path=./src/sanity/extract.json && sanity typegen generate"
 	},
 	"dependencies": {
+		"@radix-ui/react-slot": "^1.2.0",
 		"@sanity/image-url": "1",
 		"@sanity/vision": "3",
+		"@sentry/nextjs": "^9.11.0",
 		"@tailwindcss/postcss": "^4.0.17",
 		"@tailwindcss/typography": "^0.5.16",
 		"@vercel/analytics": "^1.5.0",
+		"class-variance-authority": "^0.7.1",
+		"clsx": "^2.1.1",
 		"lucide-react": "^0.487.0",
 		"markdown-it": "^14.1.0",
 		"next": "15.3.0-canary.43",
@@ -30,6 +34,7 @@
 		"sanity-plugin-markdown": "^5.1.0",
 		"server-only": "^0.0.1",
 		"styled-components": "6",
+		"tailwind-merge": "^3.2.0",
 		"tailwindcss-animate": "^1.0.7"
 	},
 	"packageManager": "pnpm@10.2.0",
