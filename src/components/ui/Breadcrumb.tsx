@@ -49,14 +49,21 @@ export default function Breadcrumbs({ segments, blogTitle }: BreadcrumbsProps) {
 	}
 
 	return (
-		<nav aria-label='Breadcrumb'>
-			<ol className='flex items-center space-x-2'>
+		<nav
+			aria-label='Breadcrumb'
+			className='bg-greyBackground py-3 md:py-[14px]'>
+			<ol className='flex items-center space-x-2 max-w-6xl mx-auto hor-padding'>
 				{crumbs.map((crumb, index) => (
 					<li
 						key={index}
 						className='flex items-center'>
 						<Link href={crumb.href}>
-							<span className='text-sm font-medium text-gray-500 hover:text-gray-700'>
+							<span
+								className={`text-sm font-medium ${
+									index < crumbs.length
+										? 'text-darkGrey'
+										: 'text-black text-opacity-[24%]'
+								} hover:text-gray-700`}>
 								{crumb.label}
 							</span>
 						</Link>

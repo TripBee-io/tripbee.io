@@ -1,6 +1,8 @@
+import Image from 'next/image'
+
 const Newsletter = () => {
 	return (
-		<div className='px-4 bg-[#F03800] rounded-[72px] flex flex-col items-center justify-center text-white py-[92px] md:mt-[120px]'>
+		<div className='px-4 bg-[#F03800] rounded-t-[32px] md:rounded-[72px] flex flex-col items-center justify-center text-white pt-12 md:py-[92px] md:mt-[120px]'>
 			<h4 className='font-bold text-[40px] md:text-[56px] text-center '>
 				Never Miss Any Travel Deals
 			</h4>
@@ -21,6 +23,13 @@ const Newsletter = () => {
 					Subscribe
 				</button>
 			</form>
+			<Image
+				src='/mailbox.svg'
+				alt='Image of a mailbox'
+				width={210}
+				height={200}
+				className='mt-8 block md:hidden'
+			/>
 		</div>
 	)
 }

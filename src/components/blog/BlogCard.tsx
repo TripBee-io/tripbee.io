@@ -1,23 +1,16 @@
 import { Author, Blog } from '@/sanity/types'
-import formatDate from '@/utils/formatDate'
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import React from 'react'
+import AuthorDate from './AuthorDate'
 
 export type BlogTypeCard = Omit<Blog, 'author'> & { author?: Author }
 const BlogCard = ({ post }: { post: BlogTypeCard }) => {
-	const {
-		_createdAt,
-		author,
-		title,
-		slug, // use the slug field here
-		image,
-		_id,
-	} = post
+	const { _createdAt, author, title, slug, image, _id } = post
 
-	const authorId = author?._id
-	console.log(author)
+	// const authorId = author?._id
+	// console.log(author)
 
 	if (!slug || !slug.current) return notFound()
 
@@ -31,10 +24,10 @@ const BlogCard = ({ post }: { post: BlogTypeCard }) => {
 					width={325}
 					height={256}
 					alt='Blog image'
-					className='rounded-3xl'
+					className='rounded-3xl mb-5'
 				/>
 			)}
-			<div className='flex items-center justify-start gap-2 pt-5'>
+			{/* <div className='flex items-center justify-start gap-2 pt-5'>
 				<p className='text-[#777E90] text-xs'>
 					{formatDate(_createdAt)}
 				</p>
@@ -44,7 +37,11 @@ const BlogCard = ({ post }: { post: BlogTypeCard }) => {
 						<p className='text-[#777E90] text-xs'>{author.name}</p>
 					</>
 				)}
-			</div>
+			</div> */}
+			<AuthorDate
+				date={_createdAt}
+				author={author}
+			/>
 			<p className='font-bold text-xl pt-2'>{title}</p>
 		</Link>
 	)

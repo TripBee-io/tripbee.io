@@ -1,9 +1,7 @@
 import BlogCard, { BlogTypeCard } from '@/components/blog/BlogCard'
 import BlogHero from '@/components/blog/BlogHero'
 import Newsletter from '@/components/blog/Newsletter'
-import SearchForm from '@/components/blog/SearchForm'
 import Breadcrumbs from '@/components/ui/Breadcrumb'
-import { client } from '@/sanity/lib/client'
 import { sanityFetch, SanityLive } from '@/sanity/lib/live'
 import { BLOGS_QUERY } from '@/sanity/lib/queries'
 
@@ -16,12 +14,12 @@ export default async function BlogHome({
 	const params = { search: query || null }
 	const { data: blogs } = await sanityFetch({ query: BLOGS_QUERY, params })
 	return (
-		<div className='max-w-6xl mx-auto'>
+		<div className=''>
 			<Breadcrumbs segments={['blog']} />
 			<BlogHero query={query} />
-			<section className='mt-8 md:mt-[72px]'>
+			<section className='mt-8 md:mt-[72px] max-w-6xl mx-auto hor-padding'>
 				{/* <p>{query ? `Search results for "${query}"` : 'All blogs'}</p> */}
-				<div className='flex flex-wrap gap-y-8 md:gap-x-8 md:gap-y-16 items-center justify-center'>
+				<div className='flex flex-wrap gap-y-8 md:gap-x-8 md:gap-y-16 items-start justify-start'>
 					{blogs &&
 						blogs?.map((blog: BlogTypeCard) => (
 							<BlogCard
@@ -31,7 +29,7 @@ export default async function BlogHome({
 						))}
 				</div>
 			</section>
-			<section className='mt-16 md:mt-[120px]'>
+			<section className='max-w-6xl mx-auto mt-16 md:mt-[120px]'>
 				<Newsletter />
 			</section>
 			<SanityLive />
