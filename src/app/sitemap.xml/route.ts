@@ -28,6 +28,3 @@ export async function GET(_request: Request): Promise<Response> {
 }
 
 
-// <url>
-// <loc>${EXTERNAL_DATA_URL}</loc>
-// </url>

@@ -1,5 +1,5 @@
 import Image from 'next/image'
-// remove comment
+
 const Newsletter = () => {
 	return (
 		<div className='px-4 bg-[#F03800] rounded-t-[32px] md:rounded-[72px] flex flex-col items-center justify-center text-white pt-12 md:py-[92px] md:mt-[120px]'>

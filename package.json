@@ -4,6 +4,7 @@
 	"private": true,
 	"scripts": {
 		"dev": "next dev",
+		"dev-inspect": "NODE_OPTIONS='--inspect' next dev",
 		"build": "next build",
 		"start": "next start",
 		"lint": "next lint",
@@ -26,6 +27,7 @@
 		"next": "15.3.0-canary.43",
 		"next-auth": "5.0.0-beta.25",
 		"next-sanity": "9.8.58-canary.0",
+		"next-sitemap": "^4.2.3",
 		"posthog-js": "^1.233.1",
 		"posthog-node": "^4.10.2",
 		"react": "^19.0.0",
