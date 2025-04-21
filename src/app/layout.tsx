@@ -1,18 +1,14 @@
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
 import Script from 'next/script'
 import { PostHogProvider } from '../components/PostHogProvider'
 import { Analytics } from '@vercel/analytics/react'
 
-const geistSans = Geist({
-	variable: '--font-geist-sans',
-	subsets: ['latin'],
-})
+import { DM_Sans } from 'next/font/google'
 
-const geistMono = Geist_Mono({
-	variable: '--font-geist-mono',
+const dmSans = DM_Sans({
 	subsets: ['latin'],
+	variable: '--font-dm-sans',
 })
 
 const jsonLd = {
@@ -22,23 +18,6 @@ const jsonLd = {
 	url: 'https://tripbee.io',
 	logo: 'https://tripbee.io/logo.png',
 	image: 'https://tripbee.io/opengraph-tripbee.png',
-	// sameAs: [
-	// 	'https://www.instagram.com/tripbee',
-	// 	'https://www.twitter.com/tripbee',
-	// ],
-	// contactPoint: [
-	// 	{
-	// 		'@type': 'ContactPoint',
-	// 		telephone: '+1-555-TRIPBEE',
-	// 		contactType: 'Customer Support',
-	// 	},
-	// ],
-	// {
-	// 	"potentialAction": {
-	//     "@type": "SearchAction",
-	//     "target": "https://tripbee.io/search?query={search_term_string}",
-	//     "query-input": "required name=search_term_string"
-	//   }
 }
 
 export const metadata: Metadata = {
@@ -74,9 +53,9 @@ export const metadata: Metadata = {
 	},
 	alternates: {
 		canonical: 'https://www.tripbee.io/',
-		// You can add hreflang alternate URLs here in the future for multi-language support.
 	},
 }
+
 export default function RootLayout({
 	children,
 }: Readonly<{
@@ -85,12 +64,29 @@ export default function RootLayout({
 	return (
 		<html lang='en'>
 			<head>
+				{/* Google Tag Manager */}
+				<Script
+					id='gtm-script'
+					strategy='beforeInteractive'
+					dangerouslySetInnerHTML={{
+						__html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+              j=d.createElement(s),dl=l!='dataLayer'? '&l='+l : '';j.async=true;j.src=
+              'https://www.googletagmanager.com/gtm.js?id='+i+dl;
+              f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','GTM-5DJKPMHZ');`,
+					}}
+				/>
+
+				{/* JSON-LD */}
 				<Script
 					id='json-ld'
 					type='application/ld+json'
 					strategy='beforeInteractive'
 					dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
 				/>
+
+				{/* Other third-party scripts */}
 				<Script
 					src='https://emrldtp.cc/NDAxMTg0.js?t=401184'
 					strategy='afterInteractive'
@@ -100,8 +96,17 @@ export default function RootLayout({
 					data-wpfc-render='false'
 				/>
 			</head>
-			<body
-				className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+			<body className={`${dmSans.variable} antialiased`}>
+				{/* Google Tag Manager (noscript) */}
+				<noscript>
+					<iframe
+						src='https://www.googletagmanager.com/ns.html?id=GTM-5DJKPMHZ'
+						height='0'
+						width='0'
+						style={{ display: 'none', visibility: 'hidden' }}
+					/>
+				</noscript>
+
 				<Analytics />
 				<PostHogProvider>{children}</PostHogProvider>
 			</body>
