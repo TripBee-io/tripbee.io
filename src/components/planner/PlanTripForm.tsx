@@ -21,7 +21,7 @@ const PlanTripForm = async () => {
 			endDate: endDateStr,
 		})
 
-		redirect(`/itinerary?${params.toString()}`)
+		redirect(`/trip-planner/itinerary?${params.toString()}`)
 	}
 
 	return (
