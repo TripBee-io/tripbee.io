@@ -12,7 +12,8 @@ import {
 
 import { rectIntersection } from '@dnd-kit/core'
 import { ItineraryPlace } from '@/types/itinerary'
-import DroppableZone from './DroppableZone'
+import DayPlan from './DayPlan'
+import RecommendedPlaces from './RecommendedPlaces'
 
 interface DayPlannerProps {
 	day: string
@@ -22,8 +23,8 @@ interface DayPlannerProps {
 export default function DayPlanner({ day, places }: DayPlannerProps) {
 	const [containers] = useState(['top-zone', 'bottom-zone'])
 	const [items, setItems] = useState<Record<string, string[]>>({
-		'top-zone': [],
-		'bottom-zone': Array.from({ length: 6 }, (_, i) => `item-${i}`),
+		'top-zone': [], // Empty array for initial plan
+		'bottom-zone': places.map((place) => place.name),
 	})
 
 	const sensors = useSensors(
@@ -39,29 +40,23 @@ export default function DayPlanner({ day, places }: DayPlannerProps) {
 		if (!over) return
 
 		const activeContainer = findContainer(active.id)
-		const overContainer = over.id
+		const overContainer = over.id.toString()
 
 		if (
 			!activeContainer ||
-			!containers.includes(overContainer.toString()) ||
+			!containers.includes(overContainer) ||
 			activeContainer === overContainer
 		) {
 			return
 		}
 
-		setItems((prev) => {
-			const newItems = { ...prev }
-			const activeIndex = newItems[activeContainer].indexOf(
-				active.id as string
-			)
-
-			// Remove from active container
-			const [removed] = newItems[activeContainer].splice(activeIndex, 1)
-			// Add to over container
-			newItems[overContainer.toString()].push(removed)
-
-			return newItems
-		})
+		setItems((prev) => ({
+			...prev,
+			[activeContainer]: prev[activeContainer].filter(
+				(item) => item !== active.id
+			),
+			[overContainer]: [...prev[overContainer], active.id as string],
+		}))
 	}
 
 	const findContainer = (id: UniqueIdentifier) => {
@@ -76,15 +71,11 @@ export default function DayPlanner({ day, places }: DayPlannerProps) {
 			collisionDetection={rectIntersection}
 			onDragEnd={handleDragEnd}>
 			<div className='flex flex-col gap-8 p-4'>
-				<DroppableZone
-					id='top-zone'
+				<DayPlan
+					day={day}
 					items={items['top-zone']}
 				/>
-				<DroppableZone
-					id='bottom-zone'
-					items={items['bottom-zone']}
-					isScrollable
-				/>
+				<RecommendedPlaces items={items['bottom-zone']} />
 			</div>
 		</DndContext>
 	)
