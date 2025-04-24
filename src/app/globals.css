@@ -11,6 +11,29 @@ body {
   @apply px-4 md:px-0;
 }
 
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #F03800;
+  border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #F03800;
+}
+
+/* For Firefox */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #F03800 #f1f1f1;
+}
 
 
 @layer base {
@@ -89,7 +112,9 @@ body {
     --chart-5: 27 87% 67%;
 
 
-    --radius: 0.5rem}
+    --radius: 0.5rem
+  }
+
   .dark {
 
 
@@ -162,7 +187,8 @@ body {
     --chart-4: 280 65% 60%;
 
 
-    --chart-5: 340 75% 55%}
+    --chart-5: 340 75% 55%
+  }
 }
 
 
@@ -171,6 +197,7 @@ body {
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }

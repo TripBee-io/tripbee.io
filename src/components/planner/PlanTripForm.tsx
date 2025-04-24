@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation'
 import { differenceInDays } from 'date-fns'
 import { DatePicker } from './DatePicker'
+import { AddressSearchInput } from './AddressSearchInput'
 
 const PlanTripForm = async () => {
 	async function handleSubmit(formData: FormData) {
@@ -37,19 +38,21 @@ const PlanTripForm = async () => {
 
 			<div className='flex flex-col gap-5 mt-8'>
 				{/* Location */}
-				<div className='flex flex-col gap-2 w-full'>
-					<label
+				{/* <div className='flex flex-col gap-2 w-full'> */}
+				{/* <label
 						htmlFor='location'
 						className='font-bold text-sm text-black'>
 						Where to?
-					</label>
-					<input
+					</label> */}
+				{/* <input
 						type='text'
 						name='location'
 						placeholder='Eg: Paris, London, Japan'
 						className='border-[1.5px] border-[#E6E8EC] rounded-xl py-[18px] px-5 placeholder:text-lightText w-full'
-					/>
-				</div>
+					/> */}
+
+				<AddressSearchInput />
+				{/* </div> */}
 
 				{/* Travellers & Budget */}
 				<div className='flex gap-5'>
