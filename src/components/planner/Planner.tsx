@@ -2,8 +2,8 @@
 
 import { Itinerary, ItineraryPlace } from '@/types/itinerary'
 import { useEffect, useState } from 'react'
-import DayPlanner from './DayPlanner'
 import { mockData } from './mock-data'
+import DayPlan from './DayPlan'
 
 interface PlannerProps {
 	location: string
@@ -72,17 +72,17 @@ const Planner = ({
 	if (Object.keys(itinerary).length <= 0)
 		return <div>No trip plan found!</div>
 
-	const entries = Object.entries(itinerary) as [string, ItineraryPlace[]][]
-
 	return (
 		<div>
-			{entries.map(([day, places]) => (
-				<DayPlanner
-					key={day}
-					day={day}
-					places={places}
-				/>
-			))}
+			<div className='space-y-8'>
+				{Object.entries(itinerary).map(([day, items]) => (
+					<DayPlan
+						key={day}
+						day={day}
+						items={items}
+					/>
+				))}
+			</div>
 		</div>
 	)
 }
