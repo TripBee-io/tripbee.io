@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
 		const res = await client.placeAutocomplete({
 			params: {
 				input,
-				key: 'AIzaSyCCf_eBEDl5p3KwkcYic9SnHonQqX0AFsw',
+				key: process.env.GOOGLE_MAPS_API_KEY!,
 				language: 'en',
 			},
 		})
