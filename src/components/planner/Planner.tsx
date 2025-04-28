@@ -4,6 +4,8 @@ import { Itinerary, ItineraryPlace } from '@/types/itinerary'
 import { useEffect, useState } from 'react'
 // import { mockData } from './mock-data'
 import DayPlan from './DayPlan'
+import Map from './Map'
+import Navbar from '../ui/Navbar'
 
 interface PlannerProps {
 	location: string
@@ -72,8 +74,8 @@ const Planner = ({
 		return <div>No trip plan found!</div>
 
 	return (
-		<div>
-			<div className='space-y-8'>
+		<div className='flex justify-between items-start'>
+			<div className='space-y-8 w-full'>
 				{Object.entries(itinerary).map(([day, items]) => (
 					<DayPlan
 						key={day}
@@ -82,6 +84,7 @@ const Planner = ({
 					/>
 				))}
 			</div>
+			<Map />
 		</div>
 	)
 }

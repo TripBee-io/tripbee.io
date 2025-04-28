@@ -1,4 +1,5 @@
 import Planner from '@/components/planner/Planner'
+import Navbar from '@/components/ui/Navbar'
 
 const UserTripPlannerPage = async ({
 	searchParams,
@@ -19,7 +20,7 @@ const UserTripPlannerPage = async ({
 		return <div>Invalid page</div>
 
 	return (
-		<div>
+		<>
 			<Planner
 				location={location}
 				travelers={travelers}
@@ -28,7 +29,7 @@ const UserTripPlannerPage = async ({
 				startDate={startDate}
 				endDate={endDate}
 			/>
-		</div>
+		</>
 	)
 }
 

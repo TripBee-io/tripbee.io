@@ -22,6 +22,8 @@ import {
 import { CSS } from '@dnd-kit/utilities'
 import { CircleXIcon, GripVerticalIcon } from 'lucide-react'
 import Recommended from './Recommended'
+import AddPlaceInput from './AddPlaceInput'
+import { PlaceAutocompleteResult } from '@googlemaps/google-maps-services-js'
 
 interface DayPlanProps {
 	items: ItineraryPlace[]
@@ -57,6 +59,16 @@ export default function DayPlan({ items, day }: DayPlanProps) {
 		setDayList((list) => arrayMove(list, oldIndex, newIndex))
 	}
 
+	const handleSelect = async (p: PlaceAutocompleteResult) => {
+		const res = await fetch('/api/location/google/autocomplete/details', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ place_id: p.place_id }),
+		})
+		const { place } = (await res.json()) as { place: ItineraryPlace }
+		addToPlan(place)
+	}
+
 	return (
 		<section className='mx-12'>
 			<h3 className='text-lg font-semibold mb-4'>{day}</h3>
@@ -82,15 +94,16 @@ export default function DayPlan({ items, day }: DayPlanProps) {
 				</SortableContext>
 			</DndContext>
 
+			<AddPlaceInput onSelect={handleSelect} />
 			{/* Recommended */}
 			{recommended.length > 0 && (
-				<>
+				<div className='mt-5'>
 					<h4 className='font-semibold mb-2'>Recommended Places</h4>
 					<Recommended
 						recommended={recommended}
 						addToPlan={addToPlan}
 					/>
-				</>
+				</div>
 			)}
 			<br className='color-black opacity-[6%]' />
 		</section>
