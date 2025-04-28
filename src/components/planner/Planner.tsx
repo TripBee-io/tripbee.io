@@ -2,7 +2,7 @@
 
 import { Itinerary, ItineraryPlace } from '@/types/itinerary'
 import { useEffect, useState } from 'react'
-import { mockData } from './mock-data'
+// import { mockData } from './mock-data'
 import DayPlan from './DayPlan'
 
 interface PlannerProps {
@@ -22,9 +22,8 @@ const Planner = ({
 	startDate,
 	endDate,
 }: PlannerProps) => {
-	const [loading, setLoading] = useState<boolean>(false)
-	// const [itinerary, setItinerary] = useState<Itinerary>({})
-	const [itinerary, setItinerary] = useState<Itinerary>(mockData)
+	const [loading, setLoading] = useState<boolean>(true)
+	const [itinerary, setItinerary] = useState<Itinerary>({})
 	const [error, setError] = useState<string | null>()
 	useEffect(() => {
 		const fetchTripPlan = async () => {
@@ -60,7 +59,7 @@ const Planner = ({
 			}
 		}
 
-		// fetchTripPlan()
+		fetchTripPlan()
 	}, [location, travelers, budget, days, startDate, endDate])
 	if (loading)
 		return (
