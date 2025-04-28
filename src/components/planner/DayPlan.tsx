@@ -20,6 +20,8 @@ import {
 	verticalListSortingStrategy,
 } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
+import { CircleXIcon, GripVerticalIcon } from 'lucide-react'
+import Recommended from './Recommended'
 
 interface DayPlanProps {
 	items: ItineraryPlace[]
@@ -34,7 +36,7 @@ export default function DayPlan({ items, day }: DayPlanProps) {
 	const [recommended, setRecommended] = useState<ItineraryPlace[]>(items)
 
 	// click to move into day list
-	const addToPlan = (place: ItineraryPlace) => {
+	const addToPlan = (place: ItineraryPlace): void => {
 		setRecommended((r) => r.filter((p) => p.name !== place.name))
 		setDayList((d) => [...d, place])
 	}
@@ -67,12 +69,13 @@ export default function DayPlan({ items, day }: DayPlanProps) {
 				<SortableContext
 					items={dayList.map((p) => p.name)}
 					strategy={verticalListSortingStrategy}>
-					<div className='space-y-2 mb-6'>
-						{dayList.map((place) => (
+					<div className='space-y-[20px] mb-5'>
+						{dayList.map((place, index) => (
 							<SortableItem
 								key={place.name}
 								place={place}
 								onRemove={removeFromPlan}
+								index={index}
 							/>
 						))}
 					</div>
@@ -80,24 +83,16 @@ export default function DayPlan({ items, day }: DayPlanProps) {
 			</DndContext>
 
 			{/* Recommended */}
-			<h4 className='font-semibold mb-2'>Recommended Places</h4>
-			<div className='flex gap-4 flex-wrap'>
-				{recommended.map((place) => (
-					<div
-						key={place.name}
-						onClick={() => addToPlan(place)}
-						className='w-[100px] text-center cursor-pointer'>
-						<Image
-							src={'/place-demo.png'}
-							alt={place.name}
-							width={100}
-							height={100}
-							className='rounded-lg mb-1'
-						/>
-						<p className='text-sm'>{place.name}</p>
-					</div>
-				))}
-			</div>
+			{recommended.length > 0 && (
+				<>
+					<h4 className='font-semibold mb-2'>Recommended Places</h4>
+					<Recommended
+						recommended={recommended}
+						addToPlan={addToPlan}
+					/>
+				</>
+			)}
+			<br className='color-black opacity-[6%]' />
 		</section>
 	)
 }
@@ -105,9 +100,11 @@ export default function DayPlan({ items, day }: DayPlanProps) {
 function SortableItem({
 	place,
 	onRemove,
+	index,
 }: {
 	place: ItineraryPlace
 	onRemove: (place: ItineraryPlace) => void
+	index: number
 }) {
 	const {
 		attributes,
@@ -126,37 +123,47 @@ function SortableItem({
 				transition,
 				opacity: isDragging ? 0.8 : 1,
 			}}
-			className='flex items-center justify-between p-3 bg-white rounded-lg shadow'>
-			<div className='flex items-center gap-4'>
-				<Image
-					src={'/place-demo.png'}
-					alt={place.name}
-					width={60}
-					height={60}
-					className='rounded'
-				/>
-				<div>
-					<p className='font-semibold'>{place.name}</p>
-					<p className='text-sm text-gray-500'>{place.idealTime}</p>
+			className='flex items-center justify-between gap-3'>
+			<div className='flex items-center justify-between pr-4 bg-white rounded-2xl border border-black border-opacity-[6%] w-full relative'>
+				<div className='absolute -top-2 -left-2 bg-[#348CFF]  z-20 size-[26px] rounded-full border-[3px] border-white'>
+					<p className='text-sm font-bold text-center text-white'>
+						{index + 1}
+					</p>
+				</div>
+				<div className='flex items-center gap-4'>
+					<Image
+						src={place.googleImage}
+						alt={place.name}
+						width={203}
+						height={111}
+						className='rounded-l-xl'
+					/>
+
+					<div className='space-y-[4px]'>
+						<p className='font-semibold text-lg text-darkText'>
+							{place.name}
+						</p>
+						<p className='text-sm text-lightText'>
+							{place.idealTime}
+						</p>
+					</div>
+				</div>
+
+				<div className='flex items-center gap-2'>
+					{/* Remove button */}
+					<button
+						onClick={() => onRemove(place)}
+						className=''>
+						<CircleXIcon className='text-lightText size-[22px]' />
+					</button>
 				</div>
 			</div>
-
-			<div className='flex items-center gap-2'>
-				{/* Remove button */}
-				<button
-					onClick={() => onRemove(place)}
-					className='text-red-500 font-bold px-2'>
-					×
-				</button>
-
-				{/* Drag-handle “Move” */}
-				<button
-					{...attributes}
-					{...listeners}
-					className='text-blue-500 px-2'>
-					Move
-				</button>
-			</div>
+			<button
+				{...attributes}
+				{...listeners}
+				className=''>
+				<GripVerticalIcon className='color-lightText size-6' />
+			</button>
 		</div>
 	)
 }
