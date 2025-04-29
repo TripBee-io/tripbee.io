@@ -15,6 +15,7 @@ const AddPlaceInput = ({ onSelect }: AddPlaceInputProps) => {
 	const [isOpen, setIsOpen] = useState(false)
 	const timeoutRef = useRef<NodeJS.Timeout | null>(null)
 	const controllerRef = useRef<AbortController | null>(null)
+	const containerRef = useRef<HTMLFormElement>(null)
 
 	const debouncedFetch = useCallback((searchTerm: string) => {
 		if (timeoutRef.current) clearTimeout(timeoutRef.current)
@@ -68,10 +69,24 @@ const AddPlaceInput = ({ onSelect }: AddPlaceInputProps) => {
 		}
 	}, [input, debouncedFetch])
 
-	const submitHandler = async () => {}
+	useEffect(() => {
+		const handleClickOutside = (e: MouseEvent) => {
+			if (
+				containerRef.current &&
+				!containerRef.current.contains(e.target as Node)
+			) {
+				setIsOpen(false)
+			}
+		}
+		document.addEventListener('mousedown', handleClickOutside)
+		return () => {
+			document.removeEventListener('mousedown', handleClickOutside)
+		}
+	}, [])
+
 	return (
 		<form
-			onSubmit={submitHandler}
+			ref={containerRef}
 			className='w-full flex items-center justify-start gap-[10px] bg-[#F5F5F5] pl-5 rounded-[12px] relative'>
 			<MapPinIcon className='text-[#999999]' />
 			<input
@@ -91,6 +106,7 @@ const AddPlaceInput = ({ onSelect }: AddPlaceInputProps) => {
 								setInput(p.description)
 								setIsOpen(false)
 								onSelect(p)
+								setInput('')
 							}}
 							className='w-full text-left px-5 py-3 hover:bg-gray-50 transition-colors'>
 							{p.description}

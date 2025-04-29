@@ -79,12 +79,12 @@ export default function DayPlan({ items, day }: DayPlanProps) {
 				collisionDetection={closestCenter}
 				onDragEnd={handleDragEnd}>
 				<SortableContext
-					items={dayList.map((p) => p.name)}
+					items={dayList.map((p, index) => p.name)}
 					strategy={verticalListSortingStrategy}>
 					<div className='space-y-[20px] mb-5'>
 						{dayList.map((place, index) => (
 							<SortableItem
-								key={place.name}
+								key={index}
 								place={place}
 								onRemove={removeFromPlan}
 								index={index}
