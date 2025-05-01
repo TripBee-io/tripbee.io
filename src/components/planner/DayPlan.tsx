@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { ItineraryPlace } from '@/types/itinerary'
 import Image from 'next/image'
 
-// dnd-kit core + sortable
 import {
 	DndContext,
 	closestCenter,
@@ -33,7 +32,6 @@ interface DayPlanProps {
 export default function DayPlan({ items, day }: DayPlanProps) {
 	const sensors = useSensors(useSensor(PointerSensor))
 
-	// state for your day list & recommended
 	const [dayList, setDayList] = useState<ItineraryPlace[]>([])
 	const [recommended, setRecommended] = useState<ItineraryPlace[]>(items)
 
@@ -144,12 +142,12 @@ function SortableItem({
 					</p>
 				</div>
 				<div className='flex items-center gap-4'>
-					<Image
-						src={place.googleImage}
+					<img
+						src={`/api/image-proxy?url=${encodeURIComponent(
+							place.googleImage
+						)}`}
+						className='rounded-l-xl object-cover w-[124px] h-[85px]'
 						alt={place.name}
-						width={203}
-						height={111}
-						className='rounded-l-xl'
 					/>
 
 					<div className='space-y-[4px]'>
