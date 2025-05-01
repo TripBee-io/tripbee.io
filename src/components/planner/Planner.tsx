@@ -58,7 +58,7 @@ export default function Planner({
 					if (value) {
 						buffer += decoder.decode(value, { stream: true })
 						const lines = buffer.split('\n')
-						buffer = lines.pop()! // leftover
+						buffer = lines.pop()!
 
 						for (const line of lines) {
 							if (!line.trim()) continue
@@ -83,9 +83,6 @@ export default function Planner({
 		)
 	}
 
-	// count how many days we have data for so far
-	const loadedCount = Object.keys(itinerary).length
-	// array [1,2,...,days]
 	const dayIndices = Array.from({ length: days }, (_, i) => i + 1)
 
 	return (
@@ -116,22 +113,18 @@ export default function Planner({
 	)
 }
 
-/** Gray “pulse” placeholder matching your DayPlan layout */
 function DayPlanSkeleton({ day }: { day: string }) {
 	return (
 		<section className='mx-12 animate-pulse'>
-			{/* Day title */}
 			<div className='h-6 w-24 mb-4 bg-gray-200 rounded' />
 
-			{/* Add-place input */}
 			<div className='h-10 mb-6 bg-gray-200 rounded' />
 
-			{/* Recommended places grid */}
-			<div className='grid grid-cols-3 gap-4'>
-				{Array.from({ length: 3 }).map((_, i) => (
+			<div className='flex justify-start items-end gap-2'>
+				{Array.from({ length: 4 }).map((_, i) => (
 					<div
 						key={i}
-						className='h-40 bg-gray-200 rounded-lg'
+						className='h-[111px] w-[203px] bg-gray-200 rounded-lg'
 					/>
 				))}
 			</div>

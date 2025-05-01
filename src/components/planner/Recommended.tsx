@@ -13,7 +13,7 @@ const Recommended = ({
 	addToPlan: (place: ItineraryPlace) => void
 }) => {
 	return (
-		<div className='flex gap-4 flex-wrap'>
+		<div className='flex gap-2 flex-wrap'>
 			{recommended.map((place, index) => (
 				<div
 					key={index}
