@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
 	const result = res.data.result
 	const photoRef = result.photos?.[0]?.photo_reference
 	const photoUrl = photoRef
-		? `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photoRef}&key=${process.env.GOOGLE_MAPS_API_KEY}`
+		? `https://maps.googleapis.com/maps/api/place/photo?maxwidth=203&maxHeight=111&photoreference=${photoRef}&key=${process.env.GOOGLE_MAPS_API_KEY}`
 		: ''
 
 	return NextResponse.json({
