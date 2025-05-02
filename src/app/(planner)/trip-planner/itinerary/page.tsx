@@ -21,6 +21,7 @@ const UserTripPlannerPage = async ({
 
 	return (
 		<>
+			
 			<Planner
 				location={location}
 				travelers={travelers}

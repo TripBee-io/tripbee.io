@@ -2,8 +2,6 @@
 
 import { useState } from 'react'
 import { ItineraryPlace } from '@/types/itinerary'
-import Image from 'next/image'
-
 import {
 	DndContext,
 	closestCenter,
@@ -31,27 +29,22 @@ interface DayPlanProps {
 
 export default function DayPlan({ items, day }: DayPlanProps) {
 	const sensors = useSensors(useSensor(PointerSensor))
-
 	const [dayList, setDayList] = useState<ItineraryPlace[]>([])
 	const [recommended, setRecommended] = useState<ItineraryPlace[]>(items)
 
-	// click to move into day list
-	const addToPlan = (place: ItineraryPlace): void => {
+	const addToPlan = (place: ItineraryPlace) => {
 		setRecommended((r) => r.filter((p) => p.name !== place.name))
 		setDayList((d) => [...d, place])
 	}
 
-	// click × to remove back to recommended
 	const removeFromPlan = (place: ItineraryPlace) => {
 		setDayList((d) => d.filter((p) => p.name !== place.name))
 		setRecommended((r) => [...r, place])
 	}
 
-	// handle reorder inside day list
 	const handleDragEnd = (event: DragEndEvent) => {
 		const { active, over } = event
 		if (!over || active.id === over.id) return
-
 		const oldIndex = dayList.findIndex((p) => p.name === active.id)
 		const newIndex = dayList.findIndex((p) => p.name === over.id)
 		setDayList((list) => arrayMove(list, oldIndex, newIndex))
@@ -71,21 +64,20 @@ export default function DayPlan({ items, day }: DayPlanProps) {
 		<section className='mx-12'>
 			<h3 className='text-lg font-semibold mb-4'>{day}</h3>
 
-			{/* Day List: draggable/reorderable */}
 			<DndContext
 				sensors={sensors}
 				collisionDetection={closestCenter}
 				onDragEnd={handleDragEnd}>
 				<SortableContext
-					items={dayList.map((p, index) => p.name)}
+					items={dayList.map((p) => p.name)}
 					strategy={verticalListSortingStrategy}>
 					<div className='space-y-[20px] mb-5'>
 						{dayList.map((place, index) => (
 							<SortableItem
-								key={index}
+								key={place.name}
 								place={place}
-								onRemove={removeFromPlan}
 								index={index}
+								onRemove={removeFromPlan}
 							/>
 						))}
 					</div>
@@ -93,7 +85,7 @@ export default function DayPlan({ items, day }: DayPlanProps) {
 			</DndContext>
 
 			<AddPlaceInput onSelect={handleSelect} />
-			{/* Recommended */}
+
 			{recommended.length > 0 && (
 				<div className='mt-5'>
 					<h4 className='font-semibold mb-2'>Recommended Places</h4>
@@ -103,7 +95,6 @@ export default function DayPlan({ items, day }: DayPlanProps) {
 					/>
 				</div>
 			)}
-			<br className='color-black opacity-[6%]' />
 		</section>
 	)
 }
@@ -124,22 +115,27 @@ function SortableItem({
 		transform,
 		transition,
 		isDragging,
-	} = useSortable({ id: place.name })
+	} = useSortable({
+		id: place.name,
+		// turn off *all* built-in layout-change animations
+		animateLayoutChanges: () => false,
+	})
+
+	// apply exactly the transition dnd-kit gives you (no spring bounce)
+	const style: React.CSSProperties = {
+		transform: CSS.Transform.toString(transform),
+		transition: isDragging ? 'none' : transition,
+		opacity: isDragging ? 0.8 : 1,
+	}
 
 	return (
 		<div
 			ref={setNodeRef}
-			style={{
-				transform: CSS.Transform.toString(transform),
-				transition,
-				opacity: isDragging ? 0.8 : 1,
-			}}
+			style={style}
 			className='flex items-center justify-between gap-3'>
 			<div className='flex items-center justify-between pr-4 bg-white rounded-2xl border border-black border-opacity-[6%] w-full relative'>
-				<div className='absolute -top-2 -left-2 bg-[#348CFF]  z-20 size-[26px] rounded-full border-[3px] border-white'>
-					<p className='text-sm font-bold text-center text-white'>
-						{index + 1}
-					</p>
+				<div className='absolute -top-2 -left-2 bg-[#348CFF] z-20 w-[26px] h-[26px] rounded-full border-[3px] border-white flex items-center justify-center'>
+					<p className='text-sm font-bold text-white'>{index + 1}</p>
 				</div>
 				<div className='flex items-center gap-4'>
 					<img
@@ -149,7 +145,6 @@ function SortableItem({
 						className='rounded-l-xl object-cover w-[124px] h-[85px]'
 						alt={place.name}
 					/>
-
 					<div className='space-y-[4px]'>
 						<p className='font-semibold text-lg text-darkText'>
 							{place.name}
@@ -159,21 +154,14 @@ function SortableItem({
 						</p>
 					</div>
 				</div>
-
-				<div className='flex items-center gap-2'>
-					{/* Remove button */}
-					<button
-						onClick={() => onRemove(place)}
-						className=''>
-						<CircleXIcon className='text-lightText size-[22px]' />
-					</button>
-				</div>
+				<button onClick={() => onRemove(place)}>
+					<CircleXIcon className='text-lightText w-5 h-5' />
+				</button>
 			</div>
 			<button
 				{...attributes}
-				{...listeners}
-				className=''>
-				<GripVerticalIcon className='color-lightText size-6' />
+				{...listeners}>
+				<GripVerticalIcon className='text-lightText w-6 h-6' />
 			</button>
 		</div>
 	)

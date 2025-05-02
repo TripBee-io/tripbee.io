@@ -39,31 +39,48 @@ function Calendar({
 				head_cell:
 					'text-muted-foreground rounded-md w-8 font-normal text-[0.8rem]',
 				row: 'flex w-full mt-2',
+
+				// each cell container: no generic selected colouring here
 				cell: cn(
 					'relative p-0 text-center text-sm focus-within:relative focus-within:z-20',
-					'hover:bg-brightOrange/50',
+					// light hover for any cell
+					'hover:bg-[#F5802F]/50 rounded-md',
+					// rounding for range endpoints
 					props.mode === 'range'
 						? '[&:has(>.day-range-start)]:rounded-l-md [&:has(>.day-range-end)]:rounded-r-md first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md'
-						: '[&:has([aria-selected])]:rounded-md',
-					'[&:has([aria-selected])]:bg-brightOrange [&:has([aria-selected])]:text-white',
-					'[&:has([aria-selected].day-outside)]:bg-brightOrange/50 [&:has([aria-selected].day-outside)]:text-white',
+						: '',
 					classNames?.cell
 				),
+
+				// the <button> inside each cell
 				day: cn(
 					buttonVariants({ variant: 'ghost' }),
 					'h-8 w-8 p-0 font-normal aria-selected:opacity-100'
 				),
-				day_range_start: 'day-range-start',
-				day_range_end: 'day-range-end',
+
+				// single-day selection (non-range)
 				day_selected:
-					'bg-brightOrange text-white hover:bg-brightOrange focus:bg-brightOrange focus:text-white',
-				day_today: 'border border-brightOrange text-brightOrange',
-				day_outside:
-					'day-outside text-muted-foreground aria-selected:bg-brightOrange/50 aria-selected:text-white',
-				day_disabled: 'text-muted-foreground opacity-50',
+					'bg-[#FF641A] text-white hover:bg-[#FF641A] focus:bg-[#FF641A] focus:text-white',
+
+				// range endpoints
+				day_range_start: 'day-range-start bg-[#FF641A] text-white',
+				day_range_end: 'day-range-end   bg-[#FF641A] text-white',
+
+				// in-between days at 10% opacity of #F5802F
 				day_range_middle:
-					'aria-selected:bg-brightOrange aria-selected:text-white',
+					'day-range-middle bg-[#F5802F]/10 text-[#001E48] opacity-100',
+
+				// today marker
+				day_today: 'border border-[#FF641A] text-[#FF641A]',
+
+				// outside days
+				day_outside: 'day-outside text-muted-foreground',
+
+				// disabled, hidden
+				day_disabled: 'text-muted-foreground opacity-50',
 				day_hidden: 'invisible',
+
+				// allow overrides via props
 				...classNames,
 			}}
 			components={{
@@ -84,6 +101,6 @@ function Calendar({
 		/>
 	)
 }
-Calendar.displayName = 'Calendar'
 
+Calendar.displayName = 'Calendar'
 export { Calendar }
