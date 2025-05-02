@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation'
 import { differenceInDays } from 'date-fns'
-import { DatePicker } from './DatePicker'
 import { AddressSearchInput } from './AddressSearchInput'
+import { DateRangePicker } from './DateRangePicker'
 
 const PlanTripForm = async () => {
 	async function handleSubmit(formData: FormData) {
@@ -85,7 +85,7 @@ const PlanTripForm = async () => {
 				</div>
 
 				{/* Date Pickers */}
-				<div className='flex gap-5'>
+				{/* <div className='flex gap-5'>
 					<DatePicker
 						name='startDate'
 						label='Start Date'
@@ -94,7 +94,8 @@ const PlanTripForm = async () => {
 						name='endDate'
 						label='End Date'
 					/>
-				</div>
+				</div> */}
+				<DateRangePicker />
 			</div>
 
 			<button
