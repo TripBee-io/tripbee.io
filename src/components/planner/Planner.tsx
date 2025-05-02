@@ -4,6 +4,7 @@ import { Itinerary } from '@/types/itinerary'
 import { useEffect, useState } from 'react'
 import DayPlan from './DayPlan'
 import Map from './Map'
+import DayPlanSkeletonLoader from '../loader/DayPlanSkeletonLoader'
 
 interface PlannerProps {
 	location: string
@@ -100,7 +101,7 @@ export default function Planner({
 						)
 					} else {
 						return (
-							<DayPlanSkeleton
+							<DayPlanSkeletonLoader
 								key={key}
 								day={key}
 							/>
@@ -110,24 +111,5 @@ export default function Planner({
 			</div>
 			<Map />
 		</div>
-	)
-}
-
-function DayPlanSkeleton({ day }: { day: string }) {
-	return (
-		<section className='mx-12 animate-pulse'>
-			<div className='h-6 w-24 mb-4 bg-gray-200 rounded' />
-
-			<div className='h-10 mb-6 bg-gray-200 rounded' />
-
-			<div className='flex justify-start items-end gap-2'>
-				{Array.from({ length: 4 }).map((_, i) => (
-					<div
-						key={i}
-						className='h-[111px] w-[203px] bg-gray-200 rounded-lg'
-					/>
-				))}
-			</div>
-		</section>
 	)
 }

@@ -2,7 +2,6 @@ import { NextRequest } from 'next/server'
 import { GoogleGenerativeAI } from '@google/generative-ai'
 
 export const runtime = 'edge'
-
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!)
 
 export async function POST(req: NextRequest) {
@@ -10,30 +9,69 @@ export async function POST(req: NextRequest) {
 	const numDays = Number(days)
 	const encoder = new TextEncoder()
 
+	const seenNames: string[] = []
+
 	const stream = new ReadableStream({
 		async start(controller) {
 			for (let day = 1; day <= numDays; day++) {
-				// generate only Day N
-				const prompt = `
-Generate a JSON array of 3–4 budget-friendly places for Day ${day} in ${location}, clustered geographically.
-Respond ONLY with the JSON array (no markdown), e.g.:
-[
-  { "name": "...", /* etc */ },
-  …
-]
-`.trim()
+				const avoidClause = seenNames.length
+					? `Previously selected (a place can have multiple names as well avoid all places which you think refer to the same location): ${seenNames.join(
+							', '
+					  )}. Do not repeat these.`
+					: ''
 
+				const prompt = `
+					Generate a JSON array of 2-3 *popular, highly rated* places for Day ${day} in ${location}
+					(for ${travelers} travelers on a ${budget} budget). Choose only bucket-list landmarks,
+					top museums or historic sites with rating ≥ 4.0. ${avoidClause}
+
+					Respond *only* with the JSON array, for example:
+					[
+					{
+						"name": "The British Museum",
+						"description": "World-class historical artifacts and exhibits",
+						"coordinates": { "lat": 51.5194, "lng": -0.1269 },
+						"cost": "Free",
+						"idealTime": "10:00 AM - 1:00 PM",
+						"visitDuration": "2-3 hours",
+						"type": "Museum",
+						"rating": 4.7
+					},
+					…
+					]
+					`.trim()
+
+				// call Gemini
 				const model = genAI.getGenerativeModel({
 					model: 'gemini-1.5-flash',
 				})
 				const result = await model.generateContent(prompt)
 				const raw = await (await result.response).text()
-				const arr = JSON.parse(raw.replace(/```json|```/g, '').trim())
 
-				// look up place_id & photos exactly as before…
+				// clean and parse
+				const cleaned = raw
+					.replace(/```json/g, '')
+					.replace(/```/g, '')
+					.trim()
+				let arr: any[]
+				try {
+					arr = JSON.parse(cleaned)
+				} catch (err) {
+					console.error('JSON parse error:', err, { raw, cleaned })
+					throw err
+				}
+
+				// record names so we can avoid them next iteration
+				arr.forEach((item) => {
+					if (item.name && !seenNames.includes(item.name)) {
+						seenNames.push(item.name)
+					}
+				})
+
+				// look up place_id for each and collect them
 				const enriched = await Promise.all(
-					arr.map(async (item: any) => {
-						const lookup = await fetch(
+					arr.map(async (item) => {
+						const lookupRes = await fetch(
 							`https://maps.googleapis.com/maps/api/place/findplacefromtext/json` +
 								`?input=${encodeURIComponent(
 									item.name + ', ' + location
@@ -41,24 +79,29 @@ Respond ONLY with the JSON array (no markdown), e.g.:
 								`&inputtype=textquery&fields=place_id` +
 								`&key=${process.env.GOOGLE_MAPS_API_KEY}`
 						)
-						const { candidates } = await lookup.json()
+						const lookupJson = await lookupRes.json()
 						return {
 							...item,
-							place_id: candidates?.[0]?.place_id ?? null,
+							place_id:
+								lookupJson.candidates?.[0]?.place_id ?? null,
 						}
 					})
 				)
 
+				// batch-fetch photos for all place_ids in one request
 				const placeIds = enriched
 					.map((i) => i.place_id)
 					.filter((pid): pid is string => Boolean(pid))
-
 				const photoRes = await fetch(
 					`${req.nextUrl.origin}/api/location/google/photos`,
 					{
 						method: 'POST',
 						headers: { 'Content-Type': 'application/json' },
-						body: JSON.stringify({ place_ids: placeIds }),
+						body: JSON.stringify({
+							place_ids: placeIds,
+							width: 203,
+							height: 111,
+						}),
 					}
 				)
 				const { photos } = await photoRes.json()
@@ -66,15 +109,15 @@ Respond ONLY with the JSON array (no markdown), e.g.:
 					photos.map((p: any) => [p.place_id, p.photoUrl])
 				)
 
+				// stitch watermark-free photoUrl back into each item
 				const finalItems = enriched.map((item) => {
-					if (item.place_id && photoMap.has(item.place_id)) {
-						item.googleImage = photoMap.get(item.place_id)
-					}
-					delete item.place_id
-					return item
+					const { place_id, ...rest } = item
+					return place_id && photoMap.has(place_id)
+						? { ...rest, googleImage: photoMap.get(place_id) }
+						: rest
 				})
 
-				// stream one NDJSON line per day
+				// enqueue one NDJSON line per day
 				const dayLine = JSON.stringify({ [`Day ${day}`]: finalItems })
 				controller.enqueue(encoder.encode(dayLine + '\n'))
 			}
@@ -83,11 +126,10 @@ Respond ONLY with the JSON array (no markdown), e.g.:
 		},
 	})
 
-	// **Use native Response**, not NextResponse, to ensure each enqueue is flushed:
 	return new Response(stream, {
 		headers: {
 			'Content-Type': 'application/x-ndjson; charset=utf-8',
-			'Cache-Control': 'no-cache', // help prevent proxies from buffering
+			'Cache-Control': 'no-cache',
 		},
 	})
 }
