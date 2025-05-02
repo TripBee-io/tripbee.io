@@ -89,6 +89,9 @@ export default function Planner({
 	return (
 		<div className='flex justify-between items-start'>
 			<div className='space-y-8 w-full'>
+				<h1 className='font-extrabold text-[#222222] text-[40px] text-center'>
+					My Trip to {location}
+				</h1>
 				{dayIndices.map((dayNum) => {
 					const key = `Day ${dayNum}`
 					if (itinerary[key]) {
