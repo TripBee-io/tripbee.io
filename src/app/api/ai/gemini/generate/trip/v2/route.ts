@@ -121,7 +121,7 @@ export async function POST(req: NextRequest) {
 							? { ...rest, googleImage: photoMap.get(place_id) }
 							: rest
 					})
-
+					// 
 					// enqueue one NDJSON line per day
 					const dayLine = JSON.stringify({
 						[`Day ${day}`]: finalItems,
