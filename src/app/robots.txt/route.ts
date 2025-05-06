@@ -10,6 +10,8 @@ export async function GET(request: Request): Promise<Response> {
 		// Production
 		robotsTxt = `User-agent: *
   Disallow: /studio/
+  Disallow: /blog/
+  Disallow: /trip-planner/
   Sitemap: https://www.tripbee.io/sitemap.xml`
 	}
 
