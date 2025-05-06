@@ -21,7 +21,7 @@ const nextConfig: NextConfig = {
 	// This is required to support PostHog trailing slash API requests
 	skipTrailingSlashRedirect: true,
 	images: {
-		domains: ['www.akshaybenny.com'], // allow loading images from this domain
+		domains: ['maps.googleapis.com'], // allow loading images from this domain
 	},
 	// experimental: {
 	// 	ppr: 'incremental',

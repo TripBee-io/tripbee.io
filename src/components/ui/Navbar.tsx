@@ -1,9 +1,9 @@
-// import { auth, signIn, signOut } from '@/auth'
+import { auth, signIn, signOut } from '@/auth'
 import Image from 'next/image'
 import Link from 'next/link'
 
 const Navbar = async () => {
-	// const session = await auth()
+	const session = await auth()
 
 	return (
 		<nav className='flex justify-between items-center w-full gap-6 py-8 max-w-6xl mx-auto hor-padding'>
@@ -32,7 +32,7 @@ const Navbar = async () => {
 					<p>Blog</p>
 				</Link> */}
 			</div>
-			{/* <div className='flex items-center justify-end gap-6'>
+			<div className='flex items-center justify-end gap-6'>
 				<Link href='/support'>
 					<p>Support</p>
 				</Link>
@@ -64,7 +64,7 @@ const Navbar = async () => {
 						</button>
 					</form>
 				)}
-			</div> */}
+			</div>
 		</nav>
 	)
 }
