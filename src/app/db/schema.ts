@@ -1,10 +1,13 @@
 import {
+	uuid,
 	boolean,
 	timestamp,
 	pgTable,
 	text,
 	primaryKey,
 	integer,
+	serial,
+	jsonb,
 } from 'drizzle-orm/pg-core'
 import type { AdapterAccountType } from 'next-auth/adapters'
 
@@ -93,3 +96,19 @@ export const authenticators = pgTable(
 		},
 	]
 )
+
+export const trips = pgTable('trip', {
+	id: serial('id').primaryKey(),
+	userId: uuid('userId')
+		.notNull()
+		.defaultRandom()
+		.references(() => users.id, { onDelete: 'cascade' }),
+	location: text('location').notNull(),
+	travelers: integer('travelers').notNull(),
+	budget: text('budget').notNull(),
+	days: integer('days').notNull(),
+	startDate: timestamp('startDate', { mode: 'date' }).notNull(),
+	endDate: timestamp('endDate', { mode: 'date' }).notNull(),
+	itinerary: jsonb('itinerary').notNull(), // store the full Itinerary object
+	createdAt: timestamp('createdAt', { mode: 'date' }).notNull().defaultNow(),
+})

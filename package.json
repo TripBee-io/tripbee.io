@@ -10,7 +10,14 @@
 		"lint": "next lint",
 		"predev": "npm run typegen",
 		"prebuild": "npm run typegen",
-		"typegen": "sanity schema extract --path=./src/sanity/extract.json && sanity typegen generate"
+		"typegen": "sanity schema extract --path=./src/sanity/extract.json && sanity typegen generate",
+		"drizzle:generate": "drizzle-kit generate",
+		"drizzle:migrate": "drizzle-kit migrate",
+		"drizzle:push": "drizzle-kit push",
+		"drizzle:pull": "drizzle-kit pull",
+		"drizzle:check": "drizzle-kit check",
+		"drizzle:up": "drizzle-kit up",
+		"drizzle:studio": "drizzle-kit studio"
 	},
 	"dependencies": {
 		"@auth/drizzle-adapter": "^1.9.0",
